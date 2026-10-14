@@ -1,6 +1,6 @@
 {
   "name": "dsh-workbuddy-hub",
-  "version": "1.9.7",
+  "version": "1.9.8",
   "description": "WorkBuddy 转接中枢：一个插件同时提供「WorkBuddy 模型接入 DSH」的 provider，以及多账号台账（手机号 / 今日积分 / 签到 / 积分有效期 / 限流冷却 / 一键切号）。All-in-one WorkBuddy bridge for DeepSeek Harness: registers the WorkBuddy LLM provider AND serves a multi-account ledger with phone numbers, daily credit spend, check-in state, credit expiry, rate-limit cooldowns and one-click account switching.",
   "type": "module",
   "main": "lib/index.js",
@@ -66,10 +66,10 @@
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",
     "@deepseek-ai/dsh": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0",
-    "@deepseek-ai/dsh-atomic-write": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-home-paths": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-llm-pi-ai": "0.2.0-rc.2"
+    "@deepseek-ai/dsh-atomic-write": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0",
+    "@deepseek-ai/dsh-home-paths": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0",
+    "@deepseek-ai/dsh-llm": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0",
+    "@deepseek-ai/dsh-llm-pi-ai": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",

@@ -1,4 +1,72 @@
 
+## 1.9.8 — 2026-10-15
+
+### 🔴 关键修复：插件在 DSH 0.2.1-alpha.2 上被「兼容性门禁」拒绝加载（静默消失）
+
+**症状**：DSH 升级后，hub 的**模型列表分组（workbuddy / workbuddy-ai）消失**、**悬浮球也不再显示**；
+DSH 日志里**没有任何报错**，`GET /dsh-workbuddy-hub/state` 返回 **404**（路由从未注册）。
+
+### 根因
+
+DSH 在装载每个 bundle 前会跑一道**插件兼容性门禁**（`dsh-app-boot` 的 `evaluatePluginCompatibility`）：
+它把插件的 `peerDependencies` 里**所有 `@deepseek-ai/dsh` / `@deepseek-ai/dsh-*` 项**与**运行时版本**做 semver 比对，
+**任何一项不满足就直接抛错拒绝装载**；日志中的表现为该 bundle 被**静默跳过**。
+
+本插件的 4 条 peer 当时是**精确钉版**：
+
+```json
+"@deepseek-ai/dsh-atomic-write": "0.2.0-rc.2",
+"@deepseek-ai/dsh-home-paths":   "0.2.0-rc.2",
+"@deepseek-ai/dsh-llm":          "0.2.0-rc.2",
+"@deepseek-ai/dsh-llm-pi-ai":    "0.2.0-rc.2"
+```
+
+- 升级前运行时 = `0.2.0-rc.2` → 精确匹配 ✅ 正常加载
+- 升级后运行时 = **`0.2.1-alpha.2`** → 4 项**全部不匹配** ❌ → **被门禁拒绝**
+
+这就是「本来好好的，升级后突然坏了」的完整解释。
+
+### 修复
+
+把这 4 条 peer 从**精确钉版**改为**范围写法**，与 `@deepseek-ai/dsh` 项及生态内其它插件保持一致：
+
+```json
+">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0"
+```
+
+覆盖 `0.1.7-rc.*`、`0.2.0-rc.*`、`0.2.1-alpha.*`（含预发布），后续同一 minor 线的小版本升级不再触发门禁。
+
+> 这不是「绕过检查」——实测本插件的 vendor 在 DSH 0.2.1-alpha.2（含其 `dsh-llm` / `dsh-llm-pi-ai`）下
+> provider 注册与账号操作全部正常，放宽范围只是把**过期声明**修正为事实。
+
+### 顺带说明（第二个独立问题）
+
+同一次排查还发现：DSH 升级把依赖收进了 `app.asar` 单文件布局，
+使 `local-plugins/node_modules/@deepseek-ai/*` 下指向 `resources\app\node_modules` 的软链**全部悬空**；
+本插件的 vendor 需要解析 `schemastery` / `cosmokit` 等，因此已把这些链接重新指向本机
+`~/.dsh/vendor-deps/node_modules` 的同版本副本（该目录由插件用户自行生成，不属于本包内容）。
+
+### 说明
+
+- 无运行代码改动（`lib/*.js` 与 1.9.7 逐字节一致），仅 `package.json` 的 peer 范围 + 版本号 + 本日志。
+- 「`peerDependencies` 精确钉版会在 DSH 升级后被静默拒绝」——这条经验已写入开发技能库。
+
+### Fix: plugin rejected by DSH's compatibility gate on 0.2.1-alpha.2
+
+After a DSH upgrade the WorkBuddy groups vanished from the model list and the floating ball disappeared,
+with **no error in the logs** and `GET /dsh-workbuddy-hub/state` returning 404.
+
+DSH runs `evaluatePluginCompatibility` before loading each bundle: it semver-checks **every**
+`@deepseek-ai/dsh*` entry in `peerDependencies` against the running version and **refuses the bundle**
+(quietly, as a skipped entry) if any of them does not match. This plugin pinned four of those peers to the
+then-current exact prerelease `0.2.0-rc.2`, which stopped matching once the runtime moved to
+`0.2.1-alpha.2`.
+
+Those four peers are now ranges (`>=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0`), matching the
+convention used by the rest of the ecosystem. Metadata-only change; `lib/*.js` is byte-identical to 1.9.7.
+
+---
+
 ## 1.9.7 — 2026-10-14
 
 ### 合规性改进（无功能改动）
