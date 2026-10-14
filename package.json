@@ -1,6 +1,6 @@
 {
     "name": "dsh-workbuddy-hub",
-    "version": "1.8.3",
+    "version": "1.9.5",
     "description": "WorkBuddy 转接中枢：一个插件同时提供「WorkBuddy 模型接入 DSH」的 provider，以及多账号台账（手机号 / 今日积分 / 签到 / 积分有效期 / 限流冷却 / 一键切号）。All-in-one WorkBuddy bridge for DeepSeek Harness: registers the WorkBuddy LLM provider AND serves a multi-account ledger with phone numbers, daily credit spend, check-in state, credit expiry, rate-limit cooldowns and one-click account switching.",
     "type": "module",
     "main": "lib/index.js",
