@@ -1,4 +1,28 @@
 
+## 1.9.7 — 2026-10-14
+
+### 合规性改进（无功能改动）
+
+本次为**纯元数据与文档改动，未触碰任何运行代码**（`lib/*.js` 与上一版逐字节一致）：
+
+- **包元数据**：`engines.node` 对齐 DSH 运行时（`^22.19.0 || >=24.0.0`）；补 `packageManager`；`files` 白名单补上裸目录 `lib`、`locale/*.json`、`icon.svg` 与多语言 README；`exports` 补 `./locale/*.json` 与 `./icon`。
+- **交付元数据**（官方插件契约要求）：新增 `locale/en.json` 与 `locale/zh.json`（含 `meta.title` / `meta.description`），新增 `icon.svg`（插件管理器显示用图标，不再显示裸 id）。
+- **多语言文档**：新增 `README-zh.md` 中文说明；`README-es/pt/hi.md` 标题与主 README 对齐。
+
+以上改动使插件通过官方 `dsh-plugin-dev check` 全部检查项（`P=12 F=0 W=0`）。
+
+### Compliance improvements (no functional changes)
+
+This release is **metadata and documentation only — no runtime code was touched** (`lib/*.js` is byte-identical to the previous version):
+
+- **Package metadata**: `engines.node` aligned with the DSH runtime (`^22.19.0 || >=24.0.0`); `packageManager` added; `files` allowlist now includes the bare `lib` directory, `locale/*.json`, `icon.svg` and the multi-language READMEs; `exports` gained `./locale/*.json` and `./icon`.
+- **Display metadata** (required by the official plugin contract): added `locale/en.json` and `locale/zh.json` with `meta.title` / `meta.description`, plus `icon.svg` so the plugin manager shows a real name and icon instead of a bare id.
+- **Multi-language docs**: added `README-zh.md`; `README-es/pt/hi.md` headings aligned with the main README.
+
+With these changes the packages pass every official `dsh-plugin-dev check` item (`P=12 F=0 W=0`).
+
+---
+
 ## 1.9.6 — 2026-10-14
 
 **性能回归修复**（在排查「关掉 VPN 后整机变卡 / 微信发图很慢」时查出来的）。

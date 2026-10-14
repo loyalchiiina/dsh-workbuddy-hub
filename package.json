@@ -1,69 +1,82 @@
 {
-    "name": "dsh-workbuddy-hub",
-    "version": "1.9.6",
-    "description": "WorkBuddy 转接中枢：一个插件同时提供「WorkBuddy 模型接入 DSH」的 provider，以及多账号台账（手机号 / 今日积分 / 签到 / 积分有效期 / 限流冷却 / 一键切号）。All-in-one WorkBuddy bridge for DeepSeek Harness: registers the WorkBuddy LLM provider AND serves a multi-account ledger with phone numbers, daily credit spend, check-in state, credit expiry, rate-limit cooldowns and one-click account switching.",
-    "type": "module",
-    "main": "lib/index.js",
-    "exports": {
-        ".": "./lib/index.js",
-        "./client": "./lib/client.js",
-        "./package.json": "./package.json"
+  "name": "dsh-workbuddy-hub",
+  "version": "1.9.7",
+  "description": "WorkBuddy 转接中枢：一个插件同时提供「WorkBuddy 模型接入 DSH」的 provider，以及多账号台账（手机号 / 今日积分 / 签到 / 积分有效期 / 限流冷却 / 一键切号）。All-in-one WorkBuddy bridge for DeepSeek Harness: registers the WorkBuddy LLM provider AND serves a multi-account ledger with phone numbers, daily credit spend, check-in state, credit expiry, rate-limit cooldowns and one-click account switching.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "lib",
+    "lib/**/*.js",
+    "lib/**/*.txt",
+    "docs/**/*.png",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "NOTICE.md",
+    "CHANGELOG.md",
+    "locale/*.json",
+    "icon.svg",
+    "README-zh.md",
+    "README-es.md",
+    "README-pt.md",
+    "README-hi.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loyalchiiina/dsh-workbuddy-hub.git"
+  },
+  "homepage": "https://github.com/loyalchiiina/dsh-workbuddy-hub#readme",
+  "bugs": {
+    "url": "https://github.com/loyalchiiina/dsh-workbuddy-hub/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "workbuddy",
+    "bridge",
+    "provider",
+    "multi-account",
+    "ledger",
+    "rate-limit",
+    "credits",
+    "checkin"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
     },
-    "files": [
-        "lib/**/*.js",
-        "lib/**/*.txt",
-        "docs/**/*.png",
-        "cordis.patch.yml",
-        "README.md",
-        "LICENSE",
-        "NOTICE.md",
-        "CHANGELOG.md"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/loyalchiiina/dsh-workbuddy-hub.git"
-    },
-    "homepage": "https://github.com/loyalchiiina/dsh-workbuddy-hub#readme",
-    "bugs": {
-        "url": "https://github.com/loyalchiiina/dsh-workbuddy-hub/issues"
-    },
-    "license": "MIT",
-    "keywords": [
-        "dsh-plugin",
-        "deepseek-harness",
-        "workbuddy",
-        "bridge",
-        "provider",
-        "multi-account",
-        "ledger",
-        "rate-limit",
-        "credits",
-        "checkin"
-    ],
-    "dsh": {
-        "bundle": {
-            "patch": "./cordis.patch.yml"
-        },
-        "client": {
-            "inject": [
-                "@deepseek-ai/dsh-client-runtime"
-            ],
-            "platform": "web"
-        }
-    },
-    "dependencies": {
-        "@earendil-works/pi-ai": "0.87.1"
-    },
-    "peerDependencies": {
-        "@deepseek-ai/cordis": "^4.0.2",
-        "@deepseek-ai/dsh": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0",
-        "@deepseek-ai/dsh-atomic-write": "0.2.0-rc.2",
-        "@deepseek-ai/dsh-home-paths": "0.2.0-rc.2",
-        "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-        "@deepseek-ai/dsh-llm-pi-ai": "0.2.0-rc.2"
-    },
-    "devDependencies": {
-        "@deepseek-ai/cordis": "^4.0.2",
-        "@deepseek-ai/dsh": ">=0.1.7-rc.1"
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
     }
+  },
+  "dependencies": {
+    "@earendil-works/pi-ai": "0.87.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh": ">=0.1.7-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0",
+    "@deepseek-ai/dsh-atomic-write": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-home-paths": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-llm-pi-ai": "0.2.0-rc.2"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh": ">=0.1.7-rc.1"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "packageManager": "pnpm@11.7.0"
 }
